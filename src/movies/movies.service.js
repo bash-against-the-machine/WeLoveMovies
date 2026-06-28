@@ -17,12 +17,31 @@ async function list(is_showing) {
     });
 }
 
+// List all the movies in the database
+async function allMovies() {
+  return db("movies").select("*");
+}
+
+// List only the movies that are showing, sorted by title
+async function showingMovies() {
+  return db("movies as m")
+    .join("movies_theaters as mt", "m.movie_id", "mt.movie_id")
+    .where({ "mt.is_showing": true })
+    .distinct("m.*")
+    .orderBy("m.title");
+}
+
 async function read(movie_id) {
   // TODO: Add your code here
-  
+  return db("movies")
+    .select("*")
+    .where({ "movie_id": movie_id })
+    .first();
 }
 
 module.exports = {
   list,
   read,
+  allMovies,
+  showingMovies,
 };
