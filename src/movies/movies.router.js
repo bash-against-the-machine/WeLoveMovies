@@ -8,5 +8,6 @@ const theatersRouter = require("../theaters/theaters.router");
 // TODO: Add your routes here
 router.route("/").get(controller.list).all(methodNotAllowed);
 router.route("/:movieId").get(controller.read).all(methodNotAllowed);
+router.route("/:movieId/theaters").get(controller.listTheaters).all(methodNotAllowed);
 
 module.exports = router;

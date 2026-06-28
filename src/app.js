@@ -10,8 +10,7 @@ const reviewsRouter = require("./reviews/reviews.router");
 
 const errorHandler = require("./errors/errorHandler");
 
-// TODO: Add your code here
-// **DONE**
+
 app.use(cors());
 app.use(express.json());
 

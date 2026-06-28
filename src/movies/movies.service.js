@@ -31,8 +31,8 @@ async function showingMovies() {
     .orderBy("m.title");
 }
 
+// List a single movie based on movie_id
 async function read(movie_id) {
-  // TODO: Add your code here
   return db("movies")
     .select("*")
     .where({ "movie_id": movie_id })

@@ -10,6 +10,22 @@ const reduceMovies = reduceProperties("theater_id", {
   image_url: ["movies", null, "image_url"],
 });
 
+// Queries theaters for specific movie by movie_id
+async function listByMovie(movie_id) {
+  return db("theaters as t")
+    .join("movies_theaters as mt", "mt.theater_id", "t.theater_id")
+    .where({ "mt.movie_id": movie_id, "mt.is_showing": true })
+    .select("t.*");
+}
+
+
+// If the movie exists, retrieves the theaters it is showing in and send it to the client
+async function listTheaters(req, res) {
+  const { movie_id } = req.params;
+  const theaters = await service.list(movie_id);
+  res.json({ data: theaters });
+}
+
 async function list() {
   return db("theaters")
     .join(
@@ -23,4 +39,6 @@ async function list() {
 
 module.exports = {
   list,
+  listTheaters,
+  listByMovie,
 };
