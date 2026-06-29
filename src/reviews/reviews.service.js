@@ -56,7 +56,7 @@ async function setCritic(review) {
   return review;
 }
 
-
+// Updates a review
 async function update(review) {
   return db(tableName)
     .where({ review_id: review.review_id })

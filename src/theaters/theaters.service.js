@@ -1,6 +1,7 @@
 const db = require("../db/connection");
 const reduceProperties = require("../utils/reduce-properties");
 
+// Maps movies properties to movies array
 const reduceMovies = reduceProperties("theater_id", {
   movie_id: ["movies", null, "movie_id"],
   title: ["movies", null, "title"],

@@ -21,28 +21,32 @@ async function destroy(req, res) {
   res.sendStatus(204);
 }
 
-async function list(request, response) {
+// This was moved to movies.controller as listReviews, this was done because this is for a route that
+// starts with /movies/:movieId, therefore this is no longer needed
+async function list(req, res) {
   // TODO: Write your code here
 
-  response.json({  });
+  res.json({  });
 }
 
-function hasMovieIdInPath(request, response, next) {
-  if (request.params.movieId) {
+// Checks if there is a movieId in the path
+function hasMovieIdInPath(req, res, next) {
+  if (req.params.movieId) {
     return next();
   }
-  methodNotAllowed(request, response, next);
+  methodNotAllowed(req, res, next);
 }
 
-function noMovieIdInPath(request, response, next) {
-  if (request.params.movieId) {
-    return methodNotAllowed(request, response, next);
+// Checks if there is a movieId in the path
+function noMovieIdInPath(req, res, next) {
+  if (req.params.movieId) {
+    return methodNotAllowed(req, res, next);
   }
   next();
 }
 
+// Updates the specified review
 async function update(req, res) {
-  // TODO: Write your code here
   const data = await service.update({
     ...req.body.data,
     review_id: res.locals.review.review_id
