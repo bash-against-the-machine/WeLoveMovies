@@ -13,19 +13,15 @@ const reduceMovies = reduceProperties("theater_id", {
 // Queries theaters for specific movie by movie_id
 async function listByMovie(movie_id) {
   return db("theaters as t")
-    .join("movies_theaters as mt", "mt.theater_id", "t.theater_id")
+    .join(
+        "movies_theaters as mt",
+        "mt.theater_id",
+        "t.theater_id")
     .where({ "mt.movie_id": movie_id, "mt.is_showing": true })
     .select("t.*");
 }
 
-
-// If the movie exists, retrieves the theaters it is showing in and send it to the client
-async function listTheaters(req, res) {
-  const { movie_id } = req.params;
-  const theaters = await service.list(movie_id);
-  res.json({ data: theaters });
-}
-
+// Lists all theaters
 async function list() {
   return db("theaters")
     .join(
@@ -33,12 +29,12 @@ async function list() {
       "movies_theaters.theater_id",
       "theaters.theater_id"
     )
-    .join("movies", "movies.movie_id", "movies_theaters.movie_id")
+    .join("movies",
+      "movies.movie_id", "movies_theaters.movie_id")
     .then(reduceMovies);
 }
 
 module.exports = {
   list,
-  listTheaters,
   listByMovie,
 };

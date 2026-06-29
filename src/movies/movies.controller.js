@@ -1,5 +1,6 @@
 const service = require("./movies.service");
 const theatersService = require("../theaters/theaters.service");
+const reviewsService = require("../reviews/reviews.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 // Checks if the movie exists, if not returns an error that is passed to errorHandler middleware
@@ -33,8 +34,16 @@ async function listTheaters(req, res) {
   res.json({ data });
 }
 
+// List the reviews for the movie
+async function listReviews(req, res) {
+  const { movieId } = req.params;
+  const data = await reviewsService.list(movieId);
+  res.json({ data });
+}
+
 module.exports = {
   list: [asyncErrorBoundary(list)],
   read: [asyncErrorBoundary(movieExists), read],
   listTheaters: [asyncErrorBoundary(listTheaters)],
+  listReviews: [asyncErrorBoundary(listReviews)],
 };

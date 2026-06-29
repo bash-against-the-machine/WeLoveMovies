@@ -18,6 +18,14 @@ app.use("/movies", moviesRouter);
 app.use("/theaters", theatersRouter);
 app.use("/reviews", reviewsRouter);
 
+// Error handler for unspecified routes
+app.use((req, res, next) => {
+    next({ 
+        status: 404,
+        message: `Not found: ${req.originalUrl}`
+    });
+});
+
 app.use(errorHandler);
 
 module.exports = app;
